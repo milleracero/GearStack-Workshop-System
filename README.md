@@ -28,7 +28,7 @@ This repository is organized as a **monorepo**:
 
 ### 1. Database Configuration
 1. Ensure your **MariaDB** server is running.
-2. Create a database named `gearstack` (or the name specified in your `.env`).
+2. Create a database named `gearmanager` (or the name specified in your `.env`).
 3. The tables will be automatically synchronized by **Sequelize** upon server startup.
 
 ### 2. Backend Setup (`/server`)
