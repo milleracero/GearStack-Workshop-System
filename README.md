@@ -55,7 +55,7 @@ This repository is organized as a **monorepo**:
 
 | Action | Directory | Command |
 | :--- | :--- | :--- |
-| **Start Backend** | `/server` | `npm run dev` |
+| **Start Backend** | `/server` | `npm start` |
 | **Start Frontend** | `/client` | `npm run dev` |
 | **Install Dependencies** | Both | `npm install` |
 
