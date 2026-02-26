@@ -90,6 +90,6 @@ This repository is organized as a **monorepo**:
 ---
 
 ## Key Features
-* **Mechanic Dashboard**: Search vehicles by license plate, register new cars, and update repair status.
-* **Client Dashboard**: View owned vehicles and detailed maintenance history using **Sequelize** relational queries.
+* **Mechanic Dashboard**: Search vehicles by license plate, assign repairs to cars, and manage repair statuses (open or mark as completed).
+* **Client Dashboard**: Register owned vehicles, check their real-time status, and view detailed maintenance history.
 * **Security**: Role-Based Access Control (RBAC) and password hashing with Bcrypt.
