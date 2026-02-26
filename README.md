@@ -33,32 +33,44 @@ This repository is organized as a **monorepo**:
 
 ### 2. Backend Setup (`/server`)
 1.  **Open a terminal** and navigate to the folder:
+
     ```bash
     cd server
     ```
+    
 2.  **Install dependencies**:
+
     ```bash
     npm install
     ```
+    
 3.  **Run the server**:
+
     ```bash
     npm start
     ```
+    
     * *Note: The server runs on `http://localhost:3000`*.
 
 ### 3. Frontend Setup (`/client`)
 1.  **Open a NEW terminal** and navigate to:
+
     ```bash
     cd client
     ```
+    
 2.  **Install dependencies**:
+
     ```bash
     npm install
     ```
+    
 3.  **Run the dashboard**:
+
     ```bash
     npm run dev
     ```
+    
     * *Note: The application will open at `http://localhost:5173`*.
 
 ---
