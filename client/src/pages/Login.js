@@ -61,7 +61,7 @@ const Login = () => {
                 </form>
 
                 <p style={{ marginTop: '25px', fontSize: '14px', color: '#bbb' }}>
-                    ¿No tienes cuenta? <Link to="/register" style={{ color: '#007bff', textDecoration: 'none', fontWeight: 'bold' }}>Regístrate aquí</Link>
+                    Vous n'avez pas de compte ? <Link to="/register" style={{ color: '#007bff', textDecoration: 'none', fontWeight: 'bold' }}>Inscrivez-vous ici</Link>
                 </p>
             </div>
         </div>

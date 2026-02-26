@@ -5,7 +5,26 @@ const Repair = require('../models/Repair');
 // Registrar un nuevo vehículo
 exports.createCar = async (req, res) => {
     try {
-        const { plate, brand, model, ownerId } = req.body;
+        const { plate, brand, model } = req.body;
+
+        // Log para depuración en la terminal de IntelliJ
+        console.log("Token decodificado (req.user):", req.user);
+
+        // Ajuste de seguridad:
+        // Si el roleId es 2 (Cliente), forzamos su propio ID.
+        // Si no es 2 (Mecánico/Admin), permitimos que use el ownerId del body.
+        let ownerId;
+        if (req.user.roleId === 2) {
+            ownerId = req.user.id;
+            console.log(`🛡️ Seguridad: Cliente detectado. Asignando ID: ${ownerId}`);
+        } else {
+            ownerId = req.body.ownerId || req.user.id;
+            console.log(`🛠️ Taller: Asignando Owner ID manual: ${ownerId}`);
+        }
+
+        if (!ownerId) {
+            return res.status(400).json({ message: "ID du propriétaire manquant" });
+        }
 
         const carExists = await Car.findOne({ where: { plate: plate.trim().toUpperCase() } });
         if (carExists) {
@@ -16,13 +35,10 @@ exports.createCar = async (req, res) => {
             plate: plate.trim().toUpperCase(),
             brand,
             model,
-            ownerId
+            ownerId: parseInt(ownerId)
         });
 
-        res.status(201).json({
-            message: "Véhicule enregistré avec succès",
-            car: newCar
-        });
+        res.status(201).json({ message: "Véhicule enregistré avec succès", car: newCar });
     } catch (error) {
         console.error("🔥 Error createCar:", error);
         res.status(500).json({ message: "Erreur lors de l'enregistrement du véhicule" });
@@ -72,29 +88,40 @@ exports.getCarByPlate = async (req, res) => {
     }
 };
 
-// CORREGIDO: Obtener carros de un cliente específico (Jean Dupont ID 3)
+// ✅ OBTENER CARROS POR DUEÑO (Con validación de privacidad)
 exports.getCarsByOwner = async (req, res) => {
     try {
         const { ownerId } = req.params;
-
-        // Validamos que el ID sea numérico para evitar errores en MariaDB
         const parsedOwnerId = parseInt(ownerId);
+
+        // 1. Validación básica de formato
         if (isNaN(parsedOwnerId)) {
             return res.status(400).json({ message: "ID de propriétaire invalide" });
         }
 
+        // 2. 🛡️ SEGURIDAD DINÁMICA:
+        // Si el usuario logueado es un CLIENTE (roleId: 2)
+        // Y está intentando ver carros de OTRO ID que no es el suyo...
+        if (req.user.roleId === 2 && parsedOwnerId !== req.user.id) {
+            console.warn(`🚨 Tentative d'accès non autorisé par l'utilisateur ${req.user.id} aux véhicules de l'ID ${parsedOwnerId}`);
+            return res.status(403).json({
+                message: "Accès refusé: Vous ne pouvez consulter que vos propres véhicules."
+            });
+        }
+
+        // 3. Búsqueda en la base de datos
         const cars = await Car.findAll({
             where: { ownerId: parsedOwnerId },
-            // Eliminamos 'createdAt' del order si no usas timestamps en el modelo
             order: [['id', 'DESC']]
         });
 
         console.log(`✅ ${cars.length} véhicules trouvés pour l'owner ${parsedOwnerId}`);
         res.json(cars);
+
     } catch (error) {
         console.error("🔥 Error crítico en getCarsByOwner:", error.message);
         res.status(500).json({
-            message: "Erreur lors de la récupération de vos véhicules",
+            message: "Erreur lors de la récupération des véhicules",
             error: error.message
         });
     }
