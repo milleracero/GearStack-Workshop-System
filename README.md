@@ -1,10 +1,10 @@
-# 🏎️ GearStack - Workshop Management System
+#  GearStack - Workshop Management System
 
 GearStack is a full-stack application designed for automotive workshops. It allows **Mechanics** to manage vehicle interventions and **Clients** to track their car's repair history in real-time through a "Virtual Garage".
 
 
 
-## 📋 Project Structure
+##  Project Structure
 
 This repository is organized as a **monorepo**:
 * **/server**: Node.js + Express API (Backend).
@@ -12,7 +12,7 @@ This repository is organized as a **monorepo**:
 
 ---
 
-## 🚀 Installation and Execution
+##  Installation and Execution
 
 ### 1. Prerequisites
 * **Node.js** installed on your machine.
@@ -51,7 +51,7 @@ This repository is organized as a **monorepo**:
 
 ---
 
-## 🛠️ Key Commands Summary
+##  Key Commands Summary
 
 | Action | Directory | Command |
 | :--- | :--- | :--- |
@@ -61,7 +61,7 @@ This repository is organized as a **monorepo**:
 
 ---
 
-## 🔑 Demo Access (Credentials)
+##  Demo Access (Credentials)
 * **Mechanic Role**: `mecanicien@gear.com` / `123456`.
 * **Client Role**: `jean.dupont@email.com` / `123456`.
 
