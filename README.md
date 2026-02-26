@@ -1,57 +1,69 @@
-#  GearStack - Workshop Management System
+#  GearStack - Workshop Management System
 
 GearStack is a full-stack application designed for automotive workshops. It allows **Mechanics** to manage vehicle interventions and **Clients** to track their car's repair history in real-time through a "Virtual Garage".
 
-
-
-##  Project Structure
-
-This repository is organized as a **monorepo**:
-* **/server**: Node.js + Express API (Backend).
-* **/client**: React + Vite application (Frontend).
+## Tech Stack
+* **Backend**: Node.js & Express.
+* **ORM**: **Sequelize** (Object-Relational Mapping).
+* **Database**: **MariaDB**.
+* **Frontend**: React (Vite).
 
 ---
 
-##  Installation and Execution
+##  Requirements
+Before running the project, ensure you have the following installed:
+* **Node.js** (v16 or higher recommended).
+* **MariaDB** (Database server).
 
-### 1. Prerequisites
-* **Node.js** installed on your machine.
-* **MariaDB/MySQL** database running locally.
+---
+
+##  Project Structure
+This repository is organized as a **monorepo**:
+* **/server**: Node.js + Express API + **Sequelize Models**.
+* **/client**: React + Vite application.
+
+---
+
+##  Installation and Execution
+
+### 1. Database Configuration
+1. Ensure your **MariaDB** server is running.
+2. Create a database named `gearstack` (or the name specified in your `.env`).
+3. The tables will be automatically synchronized by **Sequelize** upon server startup.
 
 ### 2. Backend Setup (`/server`)
-1.  **Open a terminal** and navigate to the folder:
-    ```bash
-    cd server
-    ```
-2.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
-3.  **Run the server**:
-    * To use development mode (with auto-reload):
-        ```bash
-        npm start
-        ```
-    * *Note: The server runs on `http://localhost:3000`*.
+1.  **Open a terminal** and navigate to the folder:
+    ```bash
+    cd server
+    ```
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
+3.  **Run the server**:
+    ```bash
+    npm start
+    ```
+    * *Note: The server runs on `http://localhost:3000`*.
 
 ### 3. Frontend Setup (`/client`)
-1.  **Open a NEW terminal** (do not close the server terminal) and navigate to:
-    ```bash
-    cd client
-    ```
-2.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
-3.  **Run the dashboard**:
-    ```bash
-    npm run dev
-    ```
-    * *Note: The application will open at `http://localhost:5173`*.
+1.  **Open a NEW terminal** and navigate to:
+    ```bash
+    cd client
+    ```
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
+3.  **Run the dashboard**:
+    ```bash
+    npm run dev
+    ```
+    * *Note: The application will open at `http://localhost:5173`*.
 
 ---
 
-##  Key Commands Summary
+##  Key Commands Summary
 
 | Action | Directory | Command |
 | :--- | :--- | :--- |
@@ -61,13 +73,13 @@ This repository is organized as a **monorepo**:
 
 ---
 
-##  Demo Access (Credentials)
+##  Demo Access (Credentials)
 * **Mechanic Role**: `mecanicien@gear.com` / `123456`.
 * **Client Role**: `jean.dupont@email.com` / `123456`.
 
 ---
 
-## 🛠️ Key Features
-* **Mechanic Dashboard**: Search vehicles by license plate, register new cars, and update repair status (In Progress/Completed).
-* **Client Dashboard**: View owned vehicles and detailed maintenance history including technical notes and costs.
-* **Real-time Synchronization**: Status changes made by the mechanic are immediately visible to the car owner.
+##  Key Features
+* **Mechanic Dashboard**: Search vehicles by license plate, register new cars, and update repair status.
+* **Client Dashboard**: View owned vehicles and detailed maintenance history using **Sequelize** relational queries.
+* **Security**: Role-Based Access Control (RBAC) and password hashing with Bcrypt.
