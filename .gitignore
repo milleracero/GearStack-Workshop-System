@@ -1,0 +1,70 @@
+# --- GearStack Custom Rules ---
+# Ignorar configuraciones de IntelliJ (visto en tu ls)
+.idea/
+.vscode/
+
+# --- Client (React/Vite) ---
+client/node_modules/
+client/dist/
+client/build/
+client/.env
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
+client/.eslintcache
+
+# --- Server (Node.js) ---
+server/node_modules/
+server/.env
+server/logs/
+server/*.log
+server/npm-debug.log*
+
+# --- Archivos del Sistema ---
+.DS_Store
+Thumbs.db
+*.backup.*
+*.back.*
+
+# --- Reglas Generales de Node extraídas de tu plantilla ---
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+pids
+*.pid
+*.seed
+*.pid.lock
+lib-cov
+coverage
+*.lcov
+.nyc_output
+.grunt
+bower_components
+.lock-wscript
+build/Release
+jspm_packages/
+web_modules/
+*.tsbuildinfo
+.npm
+.stylelintcache
+.rpt2_cache/
+.node_repl_history
+*.tgz
+.yarn-integrity
+.cache
+.parcel-cache
+.next
+.nuxt
+.temp
+.docusaurus
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+.vscode-test
+.yarn/cache
+.pnp.*
