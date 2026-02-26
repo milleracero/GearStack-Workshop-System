@@ -1,4 +1,4 @@
-#  GearStack - Workshop Management System
+# GearStack - Workshop Management System
 
 GearStack is a full-stack application designed for automotive workshops. It allows **Mechanics** to manage vehicle interventions and **Clients** to track their car's repair history in real-time through a "Virtual Garage".
 
