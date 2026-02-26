@@ -30,7 +30,7 @@ This repository is organized as a **monorepo**:
 3.  **Run the server**:
     * To use development mode (with auto-reload):
         ```bash
-        npm run dev
+        npm start
         ```
     * *Note: The server runs on `http://localhost:3000`*.
 
