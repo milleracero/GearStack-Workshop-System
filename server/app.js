@@ -11,7 +11,7 @@ const repairRoutes = require('./src/routes/repairRoutes');
 
 const app = express();
 
-// 2. CONFIGURAR CORS (Debe ir antes de las rutas)
+// 1. CORS CONFIGURATION
 app.use(cors({
     origin: 'http://localhost:5173', // Permitir tu aplicación React
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -20,17 +20,20 @@ app.use(cors({
 
 app.use(express.json());
 
-// 3. RUTAS
+// 2. API ROUTES
+// Mapping controllers to specific endpoints
 app.use('/api/auth', authRoutes);
 app.use('/api/cars', carRoutes);
 app.use('/api/repairs', repairRoutes);
 
+// 3. FALLBACK ROUTE
 app.use((req, res) => {
     res.status(404).json({ message: "Route non trouvée. Vérifiez l'URL et la méthode (GET/POST)." });
 });
 
 const PORT = process.env.PORT || 3000;
 
+// 4. DATABASE SYNC & SERVER STARTUP
 const startServer = async () => {
     try {
         console.log('Intentando sincronizar tablas...');

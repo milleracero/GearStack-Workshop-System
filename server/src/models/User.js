@@ -1,9 +1,10 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const bcrypt = require('bcryptjs'); // Librería para seguridad
-const Role = require('./Role');     // Importamos para la relación
+const bcrypt = require('bcryptjs');
+const Role = require('./Role');
 
 const User = sequelize.define('User', {
+    // Primary Key: Unique identifier for each user in the system
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -20,6 +21,7 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    // Foreign Key: Links the user to a specific Role
     roleId: {
         type: DataTypes.INTEGER,
         references: {
@@ -31,7 +33,7 @@ const User = sequelize.define('User', {
     tableName: 'users',
     timestamps: false,
     hooks: {
-        // Antes de guardar, encriptamos la contraseña (Seguridad para el pentest)
+
         beforeCreate: async (user) => {
             if (user.password) {
                 const salt = await bcrypt.genSalt(10);
@@ -41,7 +43,7 @@ const User = sequelize.define('User', {
     }
 });
 
-// Definimos la relación: Un Usuario pertenece a un Rol
+
 User.belongsTo(Role, { foreignKey: 'roleId' });
 Role.hasMany(User, { foreignKey: 'roleId' });
 

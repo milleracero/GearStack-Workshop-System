@@ -3,13 +3,13 @@ const sequelize = require('../config/db'); // Se mantiene igual porque está un 
 const User = require('./User');           // Se mantiene igual porque están en la misma carpeta
 
 const Car = sequelize.define('Car', {
-    // Corresponde a id: Int en tu UML
+    // Primary Key: Unique identifier for each vehicle
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    // Corresponde a plate: Varchar en tu UML
+
     plate: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -23,7 +23,7 @@ const Car = sequelize.define('Car', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    // Relación con el dueño (User)
+    // Foreign Key: Establishing ownership relation with the User table
     ownerId: {
         type: DataTypes.INTEGER,
         references: {
@@ -36,7 +36,10 @@ const Car = sequelize.define('Car', {
     timestamps: false
 });
 
-// Definición de Relaciones (Asociaciones)
+/**
+ * Model Associations
+ * Defining the One-to-Many relationship between Users (Clients) and Cars.
+ */
 Car.belongsTo(User, { foreignKey: 'ownerId' });
 User.hasMany(Car, { foreignKey: 'ownerId' });
 

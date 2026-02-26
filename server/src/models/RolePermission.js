@@ -4,6 +4,7 @@ const Role = require('./Role');
 const Permission = require('./Permission');
 
 const RolePermission = sequelize.define('RolePermission', {
+    // Foreign Key: References the unique ID of the Role
     roleId: {
         type: DataTypes.INTEGER,
         references: {
@@ -11,6 +12,7 @@ const RolePermission = sequelize.define('RolePermission', {
             key: 'id'
         }
     },
+    // Foreign Key: References the unique ID of the Permission
     permissionId: {
         type: DataTypes.INTEGER,
         references: {
@@ -23,7 +25,7 @@ const RolePermission = sequelize.define('RolePermission', {
     timestamps: false
 });
 
-// Definición de la relación Muchos a Muchos
+
 Role.belongsToMany(Permission, { through: RolePermission, foreignKey: 'roleId' });
 Permission.belongsToMany(Role, { through: RolePermission, foreignKey: 'permissionId' });
 

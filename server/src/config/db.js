@@ -1,7 +1,6 @@
 const { Sequelize } = require('sequelize');
-require('dotenv').config({ path: './.env' });// Carga las variables de entorno desde el archivo .env
+require('dotenv').config({ path: './.env' }); // Load environment variables from .env file
 
-// Configuración de la conexión utilizando las variables de entorno
 const sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -9,18 +8,17 @@ const sequelize = new Sequelize(
     {
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
-        dialect: 'mariadb', // Definimos MariaDB como el dialecto de la base de datos
-        logging: false,     // Desactivamos los logs de SQL en la consola para mantenerla limpia
+        dialect: 'mariadb', // Database dialect specification
+        logging: false,     // Disable SQL logging for production-ready terminal output
     }
 );
 
-// Función para verificar la conexión con el servidor
 const checkConnection = async () => {
     try {
         await sequelize.authenticate();
-        console.log('Connexion a MariaDB etablie con succes.');
+        console.log('Connexion à MariaDB établie avec succès.');
     } catch (error) {
-        console.error('Impossible de se connecter a la base de datos:', error);
+        console.error('Unable to connect to the database:', error);
     }
 };
 

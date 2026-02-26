@@ -2,13 +2,13 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db'); // Tu conexión en francés
 
 const Role = sequelize.define('Role', {
-    // - id Int en tu UML
+    // Primary Key: Corresponds to id: Int
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    // - name Varchar en tu UML
+
     name: {
         type: DataTypes.STRING,
         allowNull: false,

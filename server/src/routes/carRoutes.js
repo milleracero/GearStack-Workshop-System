@@ -3,15 +3,15 @@ const router = express.Router();
 const carController = require('../controllers/carController');
 const auth = require('../middleware/authMiddleware');
 
-// --- 1. RUTAS ESTÁTICAS (Sin parámetros con dos puntos) ---
+// --- 1. STATIC ROUTES --
 router.get('/all', auth, carController.getAllCars);
 router.get('/interventions', auth, carController.getMechanicInterventions);
 
-// --- 2. RUTAS DINÁMICAS (Con parámetros :id o :plate) ---
+// --- 2. DYNAMIC ROUTES
 router.get('/owner/:ownerId', auth, carController.getCarsByOwner);
 router.get('/plate/:plate', auth, carController.getCarByPlate);
 
-// --- 3. RUTAS DE CREACIÓN/POST ---
+// --- 3. POST / CREATION ROUTES ---
 router.post('/', auth, carController.createCar);
 
 module.exports = router;

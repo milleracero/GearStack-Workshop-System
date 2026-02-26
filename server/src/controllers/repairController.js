@@ -1,19 +1,19 @@
 const Repair = require('../models/Repair');
 const Car = require('../models/Car');
 
-// Crear una nueva reparación
+// 1. Create a new repair intervention
 exports.createRepair = async (req, res) => {
     try {
-        // Extraemos todos los campos necesarios que envía el MechanicDashboard
+
         const { description, cost, carId, status, mechanicId } = req.body;
 
-        // 1. Verificar si el carro existe
+
         const car = await Car.findByPk(carId);
         if (!car) {
             return res.status(404).json({ message: "Véhicule non trouvé" });
         }
 
-        // 2. Crear el registro con la información completa
+
         const newRepair = await Repair.create({
             description,
             cost,
@@ -33,7 +33,7 @@ exports.createRepair = async (req, res) => {
     }
 };
 
-// Ver reparaciones de un carro específico (Historial para el cliente)
+// 2. Retrieve repair history for a specific vehicle
 exports.getCarRepairs = async (req, res) => {
     try {
         const { carId } = req.params;
@@ -42,13 +42,13 @@ exports.getCarRepairs = async (req, res) => {
             where: { carId },
             include: [{
                 model: Car,
-                as: 'Car', // Sequelize usa el nombre del modelo por defecto si no hay alias
+                as: 'Car',
                 attributes: ['plate', 'brand', 'model']
             }],
-            order: [['createdAt', 'DESC']] // Usamos createdAt que es automático
+            order: [['createdAt', 'DESC']]
         });
 
-        // Devolvemos la lista siempre, aunque sea un array vacío []
+
         res.json(repairs);
     } catch (error) {
         console.error("Erreur récupération repairs:", error);
@@ -56,6 +56,7 @@ exports.getCarRepairs = async (req, res) => {
     }
 };
 
+// 3. Update the status of an existing repair
 exports.updateStatus = async (req, res) => {
     try {
         const { id } = req.params;
@@ -65,7 +66,7 @@ exports.updateStatus = async (req, res) => {
 
         res.json({ message: "Statut mis à jour avec succès" });
     } catch (error) {
-        console.error("🔥 Error updateStatus:", error);
+        console.error("Error updateStatus:", error);
         res.status(500).json({ message: "Erreur lors de la mise à jour" });
     }
 };
