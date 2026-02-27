@@ -6,7 +6,7 @@
 * **Backend**: Node.js & Express.
 * **ORM**: **Sequelize** (Object-Relational Mapping).
 * **Database**: **MariaDB**.
-* **Frontend**: React (Vite).
+* **Frontend**: React (Vite), **Tailwind CSS** (v4), and **daisyUI** (Component Library).
 
 ---
 
@@ -93,3 +93,4 @@ This repository is organized as a **monorepo**:
 * **Mechanic Dashboard**: Search vehicles by license plate, assign repairs to cars, and manage repair statuses (open or mark as completed).
 * **Client Dashboard**: Register owned vehicles, check their real-time status, and view detailed maintenance history.
 * **Security**: Role-Based Access Control (RBAC) and password hashing with Bcrypt.
+* **Modern UI**: Fully responsive and themed interface built with **Tailwind CSS** and **daisyUI**.
