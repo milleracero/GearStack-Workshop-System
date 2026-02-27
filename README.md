@@ -70,9 +70,30 @@ This repository is organized as a **monorepo**:
    npm run dev
    ```
    > *Note: The application will open at `http://localhost:5173`.*
+   
+## Access Control & Demo Environment
+
+To properly test the **Role-Based Access Control (RBAC)**, it is highly recommended to initialize the database with our seed script located in the server folder. This ensures that all roles, permissions, and test users are correctly configured in your local MariaDB instance.
+
+### Database Initialization
+Navigate to the `/server` directory and run the following command to populate the database:
+
+```bash
+npm run seed
+```
+
+### User Roles & Credentials
+The application features three distinct access levels. Below is a description of each role's capabilities and the credentials you can use to log in:
+
+| Role | Permissions & Capabilities | Demo Credentials (Email / Password) |
+| :--- | :--- | :--- |
+| **Admin** (ID: 1) | **Full Access**: Can manage all system users, view global workshop logs, and register/manage Mechanic accounts. | `admin@gear.com` / `123456` |
+| **Mechanic** (ID: 2) | **Operational Access**: Can search for vehicles by plate, create and edit repair entries, and update intervention statuses. | `mecanicien@gear.com` / `123456` |
+| **Client** (ID: 3) | **Personal Access**: Can register their own vehicles, view their virtual garage, and track real-time repair history. | `jean.dupont@email.com` / `123456` |
+
 
 ## API Security & RBAC Verification
-We use **JSON Web Tokens (JWT)** and **Role-Based Access Control (RBAC)** to secure our endpoints. Below are the test cases performed in Postman to verify that our security middlewares (`authmiddleware` and `rolemiddleware`) are working correctly.
+**JSON Web Tokens (JWT)** and **Role-Based Access Control (RBAC)** are utilized to secure the endpoints. Below are the test cases performed in Postman to verify that the security middlewares (`authmiddleware` and `rolemiddleware`) are functioning correctly.
 
 ### 1. User Authentication (Login)
 Before accessing protected routes, users must authenticate to receive a unique JWT.
@@ -112,14 +133,6 @@ This test verifies that our `authmiddleware` blocks any request that does not in
 | **Start Backend** | `/server` | `npm start` |
 | **Start Frontend** | `/client` | `npm run dev` |
 | **Install Dependencies** | Both | `npm install` |
-
-
-
-## Demo Access (Credentials)
-* **Mechanic Role**: `mecanicien@gear.com` / `123456`
-* **Client Role**: `jean.dupont@email.com` / `123456`
-
-
 
 ## Key Features
 * **Admin Dashboard**: Full user management system to view all registered users and the ability to add new Mechanics to the workshop.
