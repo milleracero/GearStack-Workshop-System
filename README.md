@@ -8,21 +8,21 @@
 * **Database**: **MariaDB**.
 * **Frontend**: React (Vite), **Tailwind CSS** (v4), and **daisyUI** (Component Library).
 
----
+
 
 ## Requirements
 Before running the project, ensure you have the following installed:
 * **Node.js** (v16 or higher recommended).
 * **MariaDB** (Database server).
 
----
+
 
 ## Project Structure
 This repository is organized as a **monorepo**:
 * **/server**: Node.js + Express API + **Sequelize Models**.
 * **/client**: React + Vite application.
 
----
+
 
 ## Installation and Execution
 
@@ -71,7 +71,7 @@ This repository is organized as a **monorepo**:
    ```
    > *Note: The application will open at `http://localhost:5173`.*
 
----
+
 
 ## Key Commands Summary
 
@@ -81,15 +81,16 @@ This repository is organized as a **monorepo**:
 | **Start Frontend** | `/client` | `npm run dev` |
 | **Install Dependencies** | Both | `npm install` |
 
----
+
 
 ## Demo Access (Credentials)
 * **Mechanic Role**: `mecanicien@gear.com` / `123456`
 * **Client Role**: `jean.dupont@email.com` / `123456`
 
----
+
 
 ## Key Features
+* **Admin Dashboard**: Full user management system to view all registered users and the ability to add new Mechanics to the workshop.
 * **Mechanic Dashboard**: Search vehicles by license plate, assign repairs to cars, and manage repair statuses (open or mark as completed).
 * **Client Dashboard**: Register owned vehicles, check their real-time status, and view detailed maintenance history.
 * **Security**: Role-Based Access Control (RBAC) and password hashing with Bcrypt.
