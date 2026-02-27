@@ -140,3 +140,12 @@ This test verifies that our `authmiddleware` blocks any request that does not in
 * **Client Dashboard**: Register owned vehicles, check their real-time status, and view detailed maintenance history.
 * **Security**: Role-Based Access Control (RBAC) and password hashing with Bcrypt.
 * **Modern UI**: Fully responsive and themed interface built with **Tailwind CSS** and **daisyUI**.
+
+## Auteur & Cours
+
+| Information | Détails |
+| :--- | :--- |
+| **Auteur** | Miller Johan Chica Acero |
+| **Cours** | Sécurité des applications - Web avancé |
+| **Date** | Février 2026 |
+| **Projet** | GearStack - Système de gestion d'atelier avec RBAC |
