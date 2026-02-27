@@ -10,13 +10,15 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Forzamos el roleId a 3 porque es un registro de cliente público
+
             await api.post("/auth/register", { email, password, roleId: 3 });
 
             alert("Compte créé avec succès ! Connectez-vous.");
+
+            // Redirect the user to login page after successful registration
             navigate("/login");
         } catch (error) {
-            console.error("Erreur d'inscription:", error);
+            console.error("Registration error:", error);
             alert(
                 "Erreur: " +
                 (error.response?.data?.message || "Impossible de créer le compte"),

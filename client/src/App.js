@@ -7,17 +7,17 @@ import {
 } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 
-// Importación de las páginas reales
+// Real page imports
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AdminDashboard from "./pages/AdminDashboard";
 import MechanicDashboard from "./pages/MechanicDashboard";
-import ClientDashboard from "./pages/ClientDashboard"; // Importado correctamente
+import ClientDashboard from "./pages/ClientDashboard";
 
 function App() {
     const { user, logout } = useContext(AuthContext);
 
-    // Función para mostrar el nombre del rol en la interfaz
+
     const getRoleName = (roleId) => {
         const id = Number(roleId);
         if (id === 1) return "Admin";
@@ -28,7 +28,7 @@ function App() {
     return (
         <Router>
             <div className="App h-screen min-h-screen bg-neutral-900">
-                {/* Navbar: Solo visible si el usuario está logueado */}
+                {/* Navbar: Only rendered if the user is authenticated */}
                 {user && (
                     <nav className="navbar bg-neutral text-neutral-content shadow-sm h-1/12">
                         <div className="navbar-start">
@@ -45,7 +45,9 @@ function App() {
                 )}
 
                 <Routes>
-                    {/* FLUJO PÚBLICO: Si no hay usuario, solo Login y Registro */}
+                    {/** * PUBLIC FLOW:
+                     * If no user is logged in, only Login and Register routes are accessible.
+                     */}
                     {!user ? (
                         <>
                             <Route path="/login" element={<Login />} />
@@ -53,25 +55,29 @@ function App() {
                             <Route path="*" element={<Navigate to="/login" />} />
                         </>
                     ) : (
-                        /* FLUJO PRIVADO: Rutas protegidas por RoleID */
+                        /** * PRIVATE FLOW:
+                         * Routes protected by RoleID logic.
+                         */
                         <>
-                            {/* Ruta para Admin (ID 1) */}
+                            {/* Admin Route (ID 1) */}
                             {user.roleId == 1 && (
                                 <Route path="/admin" element={<AdminDashboard />} />
                             )}
 
-                            {/* Ruta para Mecánico (ID 2) */}
+                            {/* Mechanic Route (ID 2) */}
                             {user.roleId == 2 && (
                                 <Route path="/mechanic" element={<MechanicDashboard />} />
                             )}
 
-                            {/* Ruta para Cliente (ID 3) */}
+                            {/* Client Route (ID 3) */}
                             {user.roleId == 3 && (
                                 <Route path="/client" element={<ClientDashboard />} />
                             )}
 
-                            {/* Redirección inteligente: Si el usuario intenta ir a una ruta que no existe
-                                o a la raíz "/", lo mandamos a su panel correspondiente */}
+                            /** * SMART REDIRECTION:
+                            * If a logged-in user hits a non-existent route or the root "/",
+                            * they are redirected to their specific dashboard based on their role.
+                            */
                             <Route
                                 path="*"
                                 element={

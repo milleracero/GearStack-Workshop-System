@@ -8,7 +8,6 @@ export const AuthProvider = ({ children }) => {
         return token && savedUser ? JSON.parse(savedUser) : null;
     });
 
-    // Ahora login recibe el objeto userData completo
     const login = (token, userData) => {
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(userData));

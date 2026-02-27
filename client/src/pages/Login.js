@@ -12,12 +12,22 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await api.post("/auth/login", { email, password });
-            // Verificamos en consola qué está llegando exactamente
-            console.log("Données reçues:", response.data);
+
+            /**
+             * Debugging: Logging the response to verify the data structure
+             * expected from the backend (token and user object).
+             */
+            console.log("Received data:", response.data);
+
             const { token, user } = response.data;
+
+            /**
+             * Trigger the global login function to store the JWT
+             * and update the application's authentication state.
+             */
             login(token, user);
         } catch (error) {
-            console.error("Erreur de connexion:", error.response?.data);
+            console.error("Connection error:", error.response?.data);
             alert("Identifiants invalides");
         }
     };

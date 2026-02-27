@@ -8,9 +8,10 @@ const ClientDashboard = () => {
     const [selectedCar, setSelectedCar] = useState(null);
     const [repairs, setRepairs] = useState([]);
 
-    // Estados para el nuevo formulario de registro
+
     const [showAddForm, setShowAddForm] = useState(false);
     const [newCar, setNewCar] = useState({ plate: "", brand: "", model: "" });
+
 
     const fetchMyVehicles = useCallback(async () => {
         if (!user || !user.id) return;
@@ -19,9 +20,10 @@ const ClientDashboard = () => {
             const response = await api.get(`/cars/owner/${user.id}`);
             setVehicles(response.data || []);
         } catch (error) {
-            console.error("Erreur lors du chargement des véhicules:", error);
+            console.error("Error loading vehicles:", error);
         }
     }, [user]);
+
 
     const fetchRepairs = async (carId) => {
         try {
@@ -29,25 +31,25 @@ const ClientDashboard = () => {
             setRepairs(response.data || []);
             setSelectedCar(vehicles.find((v) => v.id === carId));
         } catch (error) {
-            console.error("Erreur lors du chargement des réparations:", error);
+            console.error("Error loading repairs:", error);
         }
     };
 
-    // Función para manejar el registro de un nuevo vehículo
+
     const handleAddCar = async (e) => {
         e.preventDefault();
         try {
-            // Enviamos solo los datos del carro. El backend asignará el ownerId por seguridad.
             await api.post("/cars", newCar);
             alert("Véhicule enregistré avec succès !");
             setNewCar({ plate: "", brand: "", model: "" });
             setShowAddForm(false);
-            fetchMyVehicles(); // Recargar la lista automáticamente
+            fetchMyVehicles(); // Refresh the list automatically after creation
         } catch (error) {
-            console.error("Erreur:", error.response?.data);
+            console.error("Error:", error.response?.data);
             alert(error.response?.data?.message || "Erreur lors de l'enregistrement");
         }
     };
+
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -61,7 +63,7 @@ const ClientDashboard = () => {
             </h2>
 
             <div className="grid grid-cols-2 gap-8 mt-5 h-11/12">
-                {/* --- SECCIÓN: MES VÉHICULES --- */}
+                {/* --- SECTION: VEHICLE LIST --- */}
                 <section className="flex flex-col justify-center items-center">
                     {!showAddForm && (
                         <div className="flex flex-col gap-5 mb-4">
@@ -101,7 +103,7 @@ const ClientDashboard = () => {
                         </div>
                     )}
 
-                    {/* Formulario de registro rápido */}
+                    {/* Registration Form UI */}
                     {showAddForm && (
                         <div className="bg-neutral-800 p-5 mb-5 shadow-2xl flex flex-col gap-8 w-lg">
                             <h4 className="text-amber-50 font-bold text-lg border-b-2 border-gray-300 pb-2">
@@ -157,7 +159,7 @@ const ClientDashboard = () => {
                     )}
                 </section>
 
-                {/* --- SECCIÓN: HISTORIAL DE REPARACIONES --- */}
+                {/* --- SECTION: REPAIR HISTORY --- */}
                 <section className="flex flex-col justify-center items-center w-full">
                     <h3 className="text-amber-50 font-bold text-xl mb-4">
                         Historique des Réparations
@@ -193,11 +195,11 @@ const ClientDashboard = () => {
                                                 {r.description}
                                             </td>
                                             <td>
-                          <span
-                              className={`py-4 rounded-2xl w-3/4 ${r.status === "Terminé" ? "badge badge-soft badge-success" : "badge badge-soft badge-warning"}`}
-                          >
-                            {r.status || "En cours"}
-                          </span>
+                                                <span
+                                                    className={`py-4 rounded-2xl w-3/4 ${r.status === "Terminé" ? "badge badge-soft badge-success" : "badge badge-soft badge-warning"}`}
+                                                >
+                                                    {r.status || "En cours"}
+                                                </span>
                                             </td>
                                             <td className="font-bold text-slate-50">
                                                 {parseFloat(r.cost).toFixed(2)} €

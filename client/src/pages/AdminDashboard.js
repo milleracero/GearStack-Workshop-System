@@ -10,23 +10,22 @@ const AdminDashboard = () => {
         roleId: 2,
     });
 
-    // 1. Usamos useCallback para que la función no cambie en cada renderizado
-    // Esto evita que el useEffect se dispare infinitamente o de forma síncrona peligrosa
+
     const fetchUsers = useCallback(async () => {
         try {
             const response = await api.get("/auth/users-list");
-            // Solo actualizamos si el componente está montado
+            // Only update the state with the list of users from the server
             setUsers(response.data.users || []);
         } catch (error) {
-            console.error("Erreur lors del cargue de usuarios", error);
+            console.error("Error while loading user list", error);
         }
-    }, []); // Dependencias vacías para que se cree una sola vez
+    }, []); // Empty dependency array so it's only created once
 
-    // 2. El useEffect ahora es más "limpio" y cumple las reglas de ESLint
+
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchUsers();
-    }, [fetchUsers]); // Se añade fetchUsers como dependencia segura
+    }, [fetchUsers]); // fetchUsers added as a safe dependency
 
     const handleCreateWorker = async (e) => {
         e.preventDefault();
@@ -35,7 +34,7 @@ const AdminDashboard = () => {
             alert("Ouvrier créé avec succès !");
             setNewWorker({ email: "", password: "", roleId: 2 });
             setShowForm(false);
-            fetchUsers(); // Recargamos la lista tras crear uno nuevo
+            fetchUsers(); // Refresh the list after successfully creating a new worker
         } catch (error) {
             alert("Erreur: " + (error.response?.data?.message || "Erreur serveur"));
         }

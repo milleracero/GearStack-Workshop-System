@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
+import React, { useEffect, useState, useCallback, useContext } from "react";
 import api from "../services/api.js";
 import { AuthContext } from "../context/AuthContext";
 
@@ -15,34 +15,40 @@ const MechanicDashboard = () => {
     });
     const [interventions, setInterventions] = useState([]);
 
-    // Función para obtener todas las intervenciones
+    /**
+     * Fetches all registered interventions/repairs from the server.
+     * Used to populate the main dashboard table.
+     */
     const fetchInterventions = useCallback(async () => {
         try {
             const response = await api.get("/cars/interventions");
             setInterventions(response.data || []);
         } catch (error) {
-            console.error("Erreur interventions:", error);
+            console.error("Interventions error:", error);
             setInterventions([]);
         }
     }, []);
 
+    /**
+     * Initial data load when the component mounts.
+     */
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchInterventions();
     }, [fetchInterventions]);
 
-    // NUEVA FUNCIÓN: Actualizar el estado de una reparación desde la tabla
     const handleUpdateStatus = async (repairId, currentStatus) => {
         const newStatus = currentStatus === "En cours" ? "Terminé" : "En cours";
         try {
-            // Se asume que la ruta en el backend es PUT /api/repairs/:id/status
+            // Sends the updated status to the backend PUT endpoint
             await api.put(`/repairs/${repairId}/status`, { status: newStatus });
-            fetchInterventions(); // Refrescar la tabla para mostrar el cambio
+            fetchInterventions(); // Refresh table data after update
         } catch (error) {
-            console.error("Erreur lors de la mise à jour du statut:", error);
+            console.error("Error updating status:", error);
             alert("Erreur lors del cambio de estado");
         }
     };
+
 
     const handleSearch = async () => {
         const cleanPlate = plate.trim().toUpperCase();
@@ -55,13 +61,14 @@ const MechanicDashboard = () => {
         } catch (error) {
             if (error.response && error.response.status === 404) {
                 alert("Car non trouvé.");
-                //setShowCarForm(true);
+                // setShowCarForm(true); // Option to trigger registration form
             } else {
-                console.error("Détails de l'erreur:", error.response?.data);
+                console.error("Search error details:", error.response?.data);
                 alert("Erreur lors de la recherche sur le serveur");
             }
         }
     };
+
 
     const handleCreateCar = async (e) => {
         e.preventDefault();
@@ -80,6 +87,7 @@ const MechanicDashboard = () => {
         }
     };
 
+
     const handleCreateRepair = async (e) => {
         e.preventDefault();
         try {
@@ -91,12 +99,13 @@ const MechanicDashboard = () => {
                 mechanicId: user.id,
             });
             alert("Réparation ajoutée avec succès !");
+            // Reset form states after success
             setRepair({ description: "", cost: "", status: "En cours" });
             setCar(null);
             setPlate("");
             fetchInterventions();
         } catch (error) {
-            console.error("Erreur:", error.response);
+            console.error("Error creating repair:", error.response);
             alert("Erreur de route ou de serveur");
         }
     };
@@ -110,7 +119,7 @@ const MechanicDashboard = () => {
             <div
                 className={`grid ${car || showCarForm ? "grid-cols-2" : "grid-cols-1"} gap-8`}
             >
-                {/* Sección de Búsqueda */}
+                {/* --- Search Section --- */}
                 <div className="p-5 bg-neutral-800 rounded-md shadow-md">
                     <h3 className="mb-4 font-bold text-lg text-slate-200">
                         Chercher un véhicule
@@ -132,7 +141,7 @@ const MechanicDashboard = () => {
                     </div>
                 </div>
 
-                {/* Formulario Nuevo Vehículo */}
+                {/* --- New Vehicle Form --- */}
                 {showCarForm && (
                     <div className="p-5 bg-zinc-800 rounded-md shadow-md">
                         <h3 className="mb-4 font-bold text-slate-200">
@@ -173,22 +182,22 @@ const MechanicDashboard = () => {
                     </div>
                 )}
 
-                {/* Formulario Nueva Reparación */}
+                {/* --- New Repair Form --- */}
                 {car && (
                     <div className="p-5 bg-zinc-800 rounded-md shadow-md">
                         <h3 className="mb-4 font-bold text-slate-200">
                             Travail sur: {car.plate}
                         </h3>
                         <form onSubmit={handleCreateRepair} className="flex flex-col gap-4">
-              <textarea
-                  placeholder="Notes techniques..."
-                  value={repair.description}
-                  onChange={(e) =>
-                      setRepair({ ...repair, description: e.target.value })
-                  }
-                  className="textarea w-full h-16"
-                  required
-              />
+                            <textarea
+                                placeholder="Notes techniques..."
+                                value={repair.description}
+                                onChange={(e) =>
+                                    setRepair({ ...repair, description: e.target.value })
+                                }
+                                className="textarea w-full h-16"
+                                required
+                            />
                             <div className="grid grid-cols-2 gap-4 w-full">
                                 <input
                                     type="number"
@@ -205,7 +214,7 @@ const MechanicDashboard = () => {
                                     onChange={(e) =>
                                         setRepair({ ...repair, status: e.target.value })
                                     }
-                                    class="select"
+                                    className="select"
                                 >
                                     <option value="En cours">En cours</option>
                                     <option value="Terminé">Terminé</option>
@@ -219,7 +228,7 @@ const MechanicDashboard = () => {
                 )}
             </div>
 
-            {/* Tabla de Intervenciones */}
+            {/* --- Interventions Table --- */}
             <div className="mt-5">
                 <h3 className="border-b-2 border-slate-200 pb-2 text-amber-50 font-bold text-xl mb-5">
                     Mes dernières interventions
@@ -267,7 +276,7 @@ const MechanicDashboard = () => {
                       </span>
                                     </td>
                                     <td className="text-center">
-                                        {/* BOTÓN DE ACCIÓN RÁPIDA PARA CAMBIAR EL ESTADO */}
+                                        {/* Quick status update button */}
                                         <button
                                             onClick={() => handleUpdateStatus(item.id, item.status)}
                                             className={`w-2/3 btn ${item.status === "Terminé" ? "btn-secondary" : "btn-success"}`}
