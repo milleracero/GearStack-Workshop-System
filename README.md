@@ -71,7 +71,39 @@ This repository is organized as a **monorepo**:
    ```
    > *Note: The application will open at `http://localhost:5173`.*
 
+## API Security & RBAC Verification
+We use **JSON Web Tokens (JWT)** and **Role-Based Access Control (RBAC)** to secure our endpoints. Below are the test cases performed in Postman to verify that our security middlewares (`authmiddleware` and `rolemiddleware`) are working correctly.
 
+### 1. User Authentication (Login)
+Before accessing protected routes, users must authenticate to receive a unique JWT.
+* **Endpoint**: `POST /api/auth/login`
+* **Result**: `200 OK` - A valid token is generated for the session.
+
+![Login Verification](./login.png)
+
+### 2. Authorized Access (Admin Role)
+An administrator with the correct permissions can access sensitive data, such as the complete list of users.
+* **Endpoint**: `GET /api/auth/users-list`
+* **Identity**: Admin Token
+* **Result**: `200 OK` - Access granted by `rolemiddleware`.
+
+![Admin Access](./user-list.png)
+
+### 3. Forbidden Access (Insufficient Permissions)
+This test demonstrates our **RBAC** logic. A user (e.g., a Mechanic) is logged in but attempts to access a route reserved for Admins.
+* **Endpoint**: `GET /api/auth/users-list`
+* **Identity**: Mechanic Token
+* **Result**: `403 Forbidden` - "Accès refusé: Permission insuffisante."
+
+![Mechanic Forbidden](./user-list-mécanicien.png)
+
+### 4. Unauthenticated Access (No Token)
+This test verifies that our `authmiddleware` blocks any request that does not include a security header.
+* **Endpoint**: `GET /api/auth/users-list`
+* **Identity**: Guest (No Token)
+* **Result**: `401 Unauthorized` - "Accès refusé. Aucun token fourni."
+
+![No Token Access](./user-list-sans-tocken.png)
 
 ## Key Commands Summary
 
